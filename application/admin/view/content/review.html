@@ -1,0 +1,94 @@
+<div class="container">
+    <h1>{$row.title|htmlentities}</h1>
+    <h3>{$row.subtitle|htmlentities}</h3>
+    <p class="page-info">
+        <strong>{$row.category}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+        创建于：{$row.created_at}&nbsp;&nbsp;&nbsp;&nbsp;
+        更新：{$row.updated_at}&nbsp;&nbsp;&nbsp;&nbsp;
+    </p>
+    {notempty name="$row.cover"}
+    <div class="page-cover">
+        <img src="__CDN__{$row.cover}">
+    </div>
+    {/notempty}
+    <div class="page-outline">
+        {$row.outline}
+    </div>
+    <div class="page-content">
+        {$row.content}
+    </div>
+    <div class="page-extra">
+        <p>标签：{$row.tags|htmlentities|chaos_dot_replace}</p>
+        <p>关键字：{$row.keywords|htmlentities}</p>
+        <p>描述：{$row.description|htmlentities}</p>
+        {volist name="extra" id="vo"}
+        <p>{$key}：{$vo}</p>
+        {/volist}
+    </div>
+    <form id="review-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-2">{:__('Top')}</label>
+            <div class="col-xs-12 col-sm-8">
+                {:build_radios('row[top]', [0 => '否', 1 => '是'], $row['top'])}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-2">{:__('Recommend')}</label>
+            <div class="col-xs-12 col-sm-8">
+                {:build_radios('row[recommend]', [0 => '否', 1 => '是'], $row['recommend'])}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-2">{:__('Review_note')}</label>
+            <div class="col-xs-12 col-sm-8">
+                <textarea name="row[review_note]" class="form-control" id="c-review-note" rows="5"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-2">{:__('go review')}</label>
+            <div class="col-xs-12 col-sm-8">
+                {:build_radios('row[status]', $reviewList, $row['status'])}
+            </div>
+        </div>
+        <div class="form-group layer-footer">
+            <label class="control-label col-xs-12 col-sm-2"></label>
+            <div class="col-xs-12 col-sm-8">
+                <button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button>
+                <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<style>
+    h1,h3{
+        text-align: center;
+    }
+    h1 {
+        font-weight: bold;
+    }
+    h3 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-weight: normal;
+    }
+    .page-info {
+        font-size: 0.8em;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    .page-cover {
+        margin-bottom: 25px;
+    }
+    .page-cover img {
+        display: block;
+        border: 0;
+        margin: 0 auto;
+    }
+    .page-content {
+        margin-top: 15px;
+        margin-bottom: 25px;
+    }
+    .page-extra {
+        margin-bottom: 25px;
+    }
+</style>
